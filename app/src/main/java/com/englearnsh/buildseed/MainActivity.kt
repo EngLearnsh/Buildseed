@@ -1,7 +1,10 @@
 package com.englearnsh.buildseed
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.os.StrictMode
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.Modifier
@@ -17,8 +20,13 @@ import com.englearnsh.buildseed.ui.BuildseedTheme
 import com.englearnsh.buildseed.util.HtmlParse
 
 class MainActivity : AppCompatActivity() {
+
+    val TAG = "Buildseed"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Force permitting all thread policies (Alpha stage)
         if (android.os.Build.VERSION.SDK_INT > 9) {
             var policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
@@ -36,8 +44,7 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun Greeting() {
-    var versionList = HtmlParse()
-    var version = versionList.parseVersion()
+    val version = HtmlParse().parseVersion()
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
